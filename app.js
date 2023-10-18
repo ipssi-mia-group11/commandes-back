@@ -3,7 +3,9 @@ const express = require('express');
 const mysql = require('mysql2');
 const app = express();
 
-dotenv.config();
+dotenv.config({
+    path: './.env.local',
+});
 
 // Configuration de la connexion à la base de données MySQL
 const db = mysql.createConnection({
