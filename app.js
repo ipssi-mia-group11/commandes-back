@@ -24,6 +24,8 @@ db.connect((err) => {
     console.log('Connecté à la base de données MySQL');
 });
 
+app.use(express.json());
+
 // Route pour récupérer des données depuis la base de données
 app.get('/api/data', (req, res) => {
     const sql = 'SELECT * FROM utilisateurs';
