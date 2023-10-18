@@ -1,13 +1,17 @@
+const dotenv = require('dotenv');
 const express = require('express');
 const mysql = require('mysql2');
 const app = express();
 
+dotenv.config();
+
 // Configuration de la connexion à la base de données MySQL
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'datacommande',
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DATABASE,
 });
 
 // Connexion à la base de données MySQL
