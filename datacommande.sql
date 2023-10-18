@@ -91,16 +91,6 @@ INSERT INTO `detailscommande` (`ID`, `CommandeID`, `ProduitID`, `Quantite`) VALU
 (13, 6, 19, 78),
 (14, 3, 9, 9);
 
---
--- Déclencheurs `detailscommande`
---
-DELIMITER $$
-CREATE TRIGGER `MiseAJourStock` AFTER INSERT ON `detailscommande` FOR EACH ROW BEGIN 
- UPDATE produits as p SET p.stock = p.stock - NEW.quantite WHERE p.id = (NEW.produitId); 
-END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
