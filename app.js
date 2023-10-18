@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const mysql = require('mysql2');
+const productsRouter = require('./routers/products');
 const app = express();
 
 dotenv.config({
@@ -25,6 +26,8 @@ db.connect((err) => {
 });
 
 app.use(express.json());
+
+app.use('/api/products', productsRouter);
 
 // Route pour récupérer des données depuis la base de données
 app.get('/api/data', (req, res) => {
