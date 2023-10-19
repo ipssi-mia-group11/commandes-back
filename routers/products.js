@@ -14,7 +14,7 @@ router.get('', (req, res) => {
             throw err;
         }
         res.json({
-            products: result,
+            items: result,
         });
     });
 });
