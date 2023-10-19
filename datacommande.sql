@@ -242,3 +242,45 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+DELIMITER //
+
+CREATE PROCEDURE CheckProductAvailability(
+  IN productId INT,
+  OUT isAvailable BOOLEAN
+)
+BEGIN
+  DECLARE productStock INT;
+
+  SELECT Stock INTO productStock
+  FROM produits
+  WHERE ID = productId;
+
+  IF productStock > 0 THEN
+    SET isAvailable = TRUE;
+  ELSE
+    SET isAvailable = FALSE;
+  END IF;
+END //
+
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE TRIGGER UpdateProductStock AFTER INSERT ON detailscommande
+FOR EACH ROW
+BEGIN
+  DECLARE quantity INT;
+  
+  SELECT Quantite INTO quantity
+  FROM detailscommande
+  WHERE ID = NEW.ID;
+  
+  UPDATE produits
+  SET Stock = Stock - quantity
+  WHERE ID = NEW.ProduitID;
+END //
+
+DELIMITER ;
