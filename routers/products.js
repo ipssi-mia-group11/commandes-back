@@ -1,13 +1,10 @@
 const { Router, } = require('express');
 const db = require('../db');
+const { formatProduct } = require('../utils');
 
 const router = Router();
 
-const formatProduct = (product) => ({
-    ...product,
-    Prix: parseFloat(product.Prix),
-});
-
+/* Get tous les produits */
 router.get('', (_, res) => {
     const sql = 'SELECT * FROM `produits`';
     db.query(sql, (err, result) => {
@@ -21,6 +18,8 @@ router.get('', (_, res) => {
     });
 });
 
+
+/* Get les infos d'un produit spécifique par son ID */
 router.get('/:id', (req, res) => {
     const sql = 'SELECT * FROM `produits` WHERE `id` = ?';
     db.query(sql, [req.params.id,], (err, result) => {
@@ -34,6 +33,8 @@ router.get('/:id', (req, res) => {
     });
 });
 
+
+/* Création d'un produit */
 router.post('', (req, res) => {
     const sql = 'INSERT INTO `produits` (`NomProduit`, `Prix`, `Stock`) VALUES (?, ?, ?)';
     db.query(sql, [req.body.NomProduit, req.body.Prix, req.body.Stock], (err, result) => {
@@ -50,6 +51,8 @@ router.post('', (req, res) => {
     });
 });
 
+
+/* Mise à jour d'un produit */
 router.patch('/:id', (req, res) => {
     const sql = 'UPDATE `produits` SET `NomProduit` = ?, `Prix` = ?, `Stock` = ? WHERE `id` = ?';
     db.query(sql, [req.body.NomProduit, req.body.Prix, req.body.Stock, req.params.id,], (err) => {
@@ -66,6 +69,8 @@ router.patch('/:id', (req, res) => {
     });
 });
 
+
+/* Suppression d'un produit */
 router.delete('/:id', (req, res) => {
     const sql = 'DELETE FROM `produits` WHERE `id` = ?';
     db.query(sql, [req.params.id,], (err) => {
