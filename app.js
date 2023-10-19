@@ -6,12 +6,15 @@ const productsRouter = require('./routers/products');
 
 const app = express();
 
-app.use(cors({
-    origin: env.CLIENT_URL,
-    optionsSuccessStatus: 200,
-}));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, }));
+
+app.use((_, res, next) => {
+    res.header('Access-Control-Allow-Origin', env.CLIENT_URL);
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 
 app.use('/api/products', productsRouter);
 
@@ -20,7 +23,7 @@ app.get('/api/data', (req, res) => {
     const sql = 'SELECT * FROM utilisateurs';
     db.query(sql, (err, result) => {
         if (err) {
-            throw err;
+            return res.sendStatus(500);
         }
         res.json(result);
     });
