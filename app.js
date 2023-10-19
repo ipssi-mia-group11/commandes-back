@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const env = require('./env');
 const db = require('./db');
@@ -5,6 +6,7 @@ const productsRouter = require('./routers/products');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use('/api/products', productsRouter);
 
