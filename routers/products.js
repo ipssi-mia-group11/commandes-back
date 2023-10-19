@@ -3,10 +3,6 @@ const db = require('../db');
 
 const router = Router();
 
-// router.get
-// router.post
-// ...
-
 const formatProduct = (product) => ({
     ...product,
     Prix: parseFloat(product.Prix),
