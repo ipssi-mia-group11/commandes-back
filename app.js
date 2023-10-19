@@ -1,8 +1,9 @@
 const cors = require('cors');
 const express = require('express');
 const env = require('./env');
-const db = require('./db');
 const productsRouter = require('./routers/products');
+const ordersRouter = require('./routers/commandes');
+const { formatProduct } = require('./utils');
 
 const app = express();
 
@@ -14,17 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true, }));
 
 app.use('/api/products', productsRouter);
+app.use('/api/orders', ordersRouter);
 
-// Route pour récupérer des données depuis la base de données
-app.get('/api/data', (req, res) => {
-    const sql = 'SELECT * FROM utilisateurs';
-    db.query(sql, (err, result) => {
-        if (err) {
-            throw err;
-        }
-        res.json(result);
-    });
-});
 
 // Port sur lequel l'API écoute
 const port = env.PORT || 3000;
