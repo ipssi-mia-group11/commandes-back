@@ -1,4 +1,5 @@
 # commandes-back
 ```bash
 npm install
-npm run start`
+npm run start
+```
