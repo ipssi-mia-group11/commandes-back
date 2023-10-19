@@ -6,8 +6,13 @@ const productsRouter = require('./routers/products');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: env.CLIENT_URL,
+    optionsSuccessStatus: 200,
+}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true, }));
+
 app.use('/api/products', productsRouter);
 
 // Route pour récupérer des données depuis la base de données
